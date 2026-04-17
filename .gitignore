@@ -1,0 +1,40 @@
+# PyTorch model weights
+*.pth
+*.pt
+
+# Datasets
+data/
+
+# Output directories and generated images
+outputs/
+outputs_finetune/
+*.png
+*.jpg
+*.jpeg
+evaluation_results.txt
+evaluation_matrix_comparison.txt
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Virtual Environments
+venv/
+env/
+.env/
+.venv/
+
+# OS generated files
+.DS_Store
+Thumbs.db
