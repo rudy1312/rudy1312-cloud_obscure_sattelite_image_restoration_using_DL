@@ -13,7 +13,7 @@ from src.loss import TotalLoss
 # Hyperparameters
 BATCH_SIZE = 16
 LEARNING_RATE = 1e-5 # Very low for fine-tuning
-EPOCHS = 15
+EPOCHS = 15 #more than 8 epochs is causing overfitting...
 NUM_WORKERS = 6
 DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 DEVICE_TYPE = DEVICE.split(":")[0]  # "cuda", "mps", or "cpu"
