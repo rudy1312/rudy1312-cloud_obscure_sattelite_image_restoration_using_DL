@@ -1,0 +1,11 @@
+prefix=/Users/rudrarajkundu/Desktop/rudy1312-cloud_obscure_sattelite_image_restoration_using_DL/.conda
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: History
+Description: Gnu History library for managing previously-entered lines
+URL: http://tiswww.cwru.edu/php/chet/readline/rltop.html
+Version: 8.3
+Libs: -L${libdir} -lhistory
+Cflags: -I${includedir}

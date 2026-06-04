@@ -10,7 +10,8 @@ import numpy as np
 from src.dataset import SatelliteDataset
 from src.model import MultiModalUNet
 
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+
 
 def load_model(path="best_model.pth"):
     model = MultiModalUNet(n_channels=5, n_classes=3).to(DEVICE)

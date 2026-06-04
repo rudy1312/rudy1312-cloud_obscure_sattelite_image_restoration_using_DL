@@ -7,7 +7,8 @@ from tqdm import tqdm
 import os
 import numpy as np
 
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+
 
 def evaluate_model(model_path, dataset, device):
     print(f"\nEvaluating: {model_path} ...")

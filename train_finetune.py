@@ -15,7 +15,8 @@ BATCH_SIZE = 16
 LEARNING_RATE = 1e-5 # Very low for fine-tuning
 EPOCHS = 15
 NUM_WORKERS = 6
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+DEVICE_TYPE = DEVICE.split(":")[0]  # "cuda", "mps", or "cpu"
 PIN_MEMORY = True
 OUTPUT_DIR = "outputs_finetune"
 
@@ -31,7 +32,7 @@ def train_fn(loader, model, optimizer, loss_fn, scaler):
         targets = batch['ground_truth'].to(DEVICE)
         
         # Forward
-        with torch.cuda.amp.autocast():
+        with torch.amp.autocast(device_type=DEVICE_TYPE):
             predictions = model(sar, cloudy)
             loss, l1, ssim_loss, perceptual = loss_fn(predictions, targets)
             
@@ -58,7 +59,7 @@ def val_fn(loader, model, loss_fn, epoch):
             cloudy = batch['cloudy_optical'].to(DEVICE)
             targets = batch['ground_truth'].to(DEVICE)
             
-            with torch.cuda.amp.autocast():
+            with torch.amp.autocast(device_type=DEVICE_TYPE):
                 predictions = model(sar, cloudy)
                 loss, l1, ssim_loss, perceptual = loss_fn(predictions, targets)
             
@@ -126,7 +127,7 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
     # TotalLoss includes PerceptualLoss
     loss_fn = TotalLoss().to(DEVICE)
-    scaler = torch.cuda.amp.GradScaler()
+    scaler = torch.amp.GradScaler(DEVICE_TYPE, enabled=(DEVICE_TYPE == "cuda"))
     scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
     
     best_loss = float('inf')

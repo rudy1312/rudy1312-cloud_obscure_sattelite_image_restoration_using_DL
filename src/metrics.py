@@ -16,8 +16,6 @@ def calculate_ssim(img1, img2):
     """
     Calculate SSIM using the implementation in src.loss.
     """
-    ssim_module = SSIM()
-    if img1.is_cuda:
-        ssim_module = ssim_module.cuda()
+    ssim_module = SSIM().to(img1.device)
     
     return ssim_module(img1, img2)

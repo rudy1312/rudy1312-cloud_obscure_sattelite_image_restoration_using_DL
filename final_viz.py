@@ -14,15 +14,15 @@ from src.metrics import calculate_psnr, calculate_ssim
 # MODEL_PATH = "final_model_refined.pth"
 MODEL_PATH = "best_model.pth"
 OUTPUT_FILE = "poster_hero_image.png"
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+
 
 # If you know specific indices for good examples of these categories, put them here.
 # Otherwise, we pick random ones.
 # Example: manual_indices = [12, 450, 899]
 MANUAL_INDICES = None 
 
-# Labels for the rows
-ROW_LABELS = ["Urban / City", "Rural / Landscape", "Water / Coastal"]
+
 
 # ==========================================
 
@@ -102,7 +102,6 @@ def make_hero_image():
         
         # -- Cloudy --
         row_axes[0].imshow(cloudy_np)
-        row_axes[0].set_ylabel(ROW_LABELS[i], fontsize=12, fontweight='bold', labelpad=10)
         
         # -- SAR --
         row_axes[1].imshow(sar_vis)

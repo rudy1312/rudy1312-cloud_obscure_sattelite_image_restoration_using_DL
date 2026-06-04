@@ -51,9 +51,7 @@ class SSIM(nn.Module):
         else:
             window = create_window(self.window_size, channel)
             
-            if img1.is_cuda:
-                window = window.cuda(img1.get_device())
-            window = window.type_as(img1)
+            window = window.to(img1.device).type_as(img1)
             
             self.window = window
             self.channel = channel
