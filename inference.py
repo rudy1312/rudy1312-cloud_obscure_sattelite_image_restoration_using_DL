@@ -16,7 +16,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is
 def load_model(path="best_model.pth"):
     model = MultiModalUNet(n_channels=5, n_classes=3).to(DEVICE)
     if os.path.exists(path):
-        model.load_state_dict(torch.load(path, map_location=DEVICE))
+        model.load_state_dict(torch.load(path, map_location=DEVICE, weights_only=True))
         print(f"Loaded: {path}")
     else:
         print(f"Model not found at {path}")

@@ -30,7 +30,7 @@ def load_model(path):
     print(f"Loading model from {path}...")
     model = MultiModalUNet(n_channels=5, n_classes=3).to(DEVICE)
     if os.path.exists(path):
-        model.load_state_dict(torch.load(path, map_location=DEVICE))
+        model.load_state_dict(torch.load(path, map_location=DEVICE, weights_only=True))
     else:
         raise FileNotFoundError(f"Model not found at {path}")
     model.eval()

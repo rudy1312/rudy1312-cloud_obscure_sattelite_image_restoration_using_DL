@@ -15,7 +15,7 @@ def evaluate_model(model_path, dataset, device):
     
     model = MultiModalUNet(n_channels=5, n_classes=3).to(device)
     if os.path.exists(model_path):
-        model.load_state_dict(torch.load(model_path, map_location=device))
+        model.load_state_dict(torch.load(model_path, map_location=device, weights_only=True))
     else:
         print(f"Skipping {model_path}: File not found.")
         return [], []
